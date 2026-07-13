@@ -1,14 +1,14 @@
 package com.hotel.booking.controller;
 
 import com.hotel.booking.domain.Room;
+import com.hotel.booking.dto.response.CreateRoomRequest;
 import com.hotel.booking.dto.response.RoomResponse;
 import com.hotel.booking.service.RoomService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +30,13 @@ public class RoomController {
     @GetMapping("/{id}")
     public ResponseEntity<RoomResponse> getRoomById(@PathVariable Long id){
         return ResponseEntity.ok(RoomResponse.from(roomService.getById(id)));
+    }
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RoomResponse> createRoom(@Valid @RequestBody CreateRoomRequest request){
+        Room room = roomService.createRoom(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(RoomResponse.from(room));
+
     }
 }
 
