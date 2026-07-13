@@ -38,6 +38,13 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(RoomResponse.from(room));
 
     }
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RoomResponse> createRoom(@Valid @RequestBody CreateRoomRequest request
+                                                   ,@PathVariable Long id) {
+        Room room = roomService.createRoom(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(RoomResponse.from(room));
+    }
 }
 
 

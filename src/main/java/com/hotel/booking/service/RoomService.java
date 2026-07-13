@@ -52,8 +52,17 @@ public class RoomService {
         room = roomRepository.save(room);
         log.info("Created Room No - {} | Type - {} ", room.getRoomNumber(), room.getType());
 
-        return room
+        return room;
     }
 
+    public Room updateRoom(Long id, CreateRoomRequest request) {
+        Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Room with id - " + id + "Not found"));
 
+        room.setRoomNumber(request.getRoomNumber());
+        room.setType(request.getType());
+        room.setCapacity(request.getCapacity());
+        room.setDescription(request.getDescription());
+        return roomRepository.save(room);
+    }
 }

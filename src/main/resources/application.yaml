@@ -14,7 +14,7 @@ spring:
       oauth2:
         resourceserver:
           jwt:
-            issuer-uri: http://localhost:9001/realms/hotel-booking
+            issuer-uri: http://localhost:9001/realms/master
 
     jpa:
       database-platform: org.hibernate.dialect.PostgreSQLDialect
